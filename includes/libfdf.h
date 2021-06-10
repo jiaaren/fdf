@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 12:42:56 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 13:41:26 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 15:11:13 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@
 # define FIELD_OF_VIEW 45
 # define RESO_X 800
 # define RESO_Y 800
-# define WIN_FIT 0.75
+# define HEX_COLOR 0x00FF0000
+# define Z_ADJ 1.0
+# define WIN_FIT 0.60
 
 typedef struct s_coor
 {
@@ -115,7 +117,7 @@ typedef struct s_data
 
 // grid processing
 t_coor	**alloc_grid(int row, int col);
-t_coor	**make_grid(char ***split, int row, int col);
+t_coor	**make_grid(char ***split, t_grid *grid);
 t_coor	**free_grid(t_coor **grid, int row);
 char	***make_char_arr(t_list *lst, int row);
 char	***free_char_arr(char ***split, int row);

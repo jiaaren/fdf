@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 12:14:51 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 13:36:16 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 14:59:33 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,29 @@ t_coor	**alloc_grid(int row, int col)
 	return (tmp);
 }
 
-t_coor	**make_grid(char ***split, int row, int col)
+t_coor	**make_grid(char ***split, t_grid *grid)
 {
 	int		i;
 	int		j;
 	t_coor	**tmp;
+	int		start_x;
+	int		start_y;
 
 	if (!split)
 		return (NULL);
-    tmp = alloc_grid(row, col);
+    tmp = alloc_grid(grid->row, grid->col);
 	i = 0;
-	while (i < row)
+	start_x = -(grid->box_len * (grid->col - 1) / 2);
+	start_y = (grid->box_len * (grid->row - 1) / 2);
+	while (i < grid->row)
 	{
 		j = 0;
-		while (j < col)
+		while (j < grid->col)
 		{
 			// combine this with cube3.c
-			tmp[i][j].x = i;
-			tmp[i][j].y = j;
-			tmp[i][j].z = ft_atoi(split[i][j]);
+			tmp[i][j].x = start_x + (j * grid->box_len);
+			tmp[i][j].y = start_y - (i * grid->box_len);
+			tmp[i][j].z = -(ft_atoi(split[i][j])) * (grid->box_len) * Z_ADJ;
 			j++;
 		}
 		i++;
@@ -163,7 +167,8 @@ int read_file(const char *filename, t_grid *grid)
 		col++;
     
 	grid->grid = NULL;
-	grid->grid = make_grid(split, row, col);
+	update_tgrid(grid, row, col);
+	grid->grid = make_grid(split, grid);
 
 	// if (grid->grid)
 	// {
@@ -180,7 +185,7 @@ int read_file(const char *filename, t_grid *grid)
 
 	ft_lstclear(&lst, free);
 	split = free_char_arr(split, row);
-	grid->grid = free_grid(grid->grid, row);
+	// grid->grid = free_grid(grid->grid, row);
 	close(fd);
 	return (0);
 }

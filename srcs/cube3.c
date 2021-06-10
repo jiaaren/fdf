@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:50:43 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 13:37:33 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 15:12:22 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void output_grid(t_data *data)
 	copy_grid(&data->grid);
 	apply_transformation(&data->grid, &data->tform);
 	// print_grid_points(&data->grid, &data->img, 0x00FF99FF);
-	print_grid_line(&data->grid, &data->img, 0x00FF99FF);
+	print_grid_line(&data->grid, &data->img, HEX_COLOR);
 	mlx_put_image_to_window(data->win.mlx, data->win.window, data->img.img, 0, 0);
 }
 
@@ -153,6 +153,7 @@ int key_hook(int keycode, t_data *data)
 		data->tform.rot.y += 5;
 		data->tform.rot.z += -10;	
 	}
+	printf("x: %i y: %i z: %i\n", data->tform.rot.x, data->tform.rot.y, data->tform.rot.z);
 	output_grid(data);
 }
 
@@ -169,65 +170,10 @@ void	initialise_window(t_data *data)
 	data->img.reso_h = RESO_Y;
 }
 
-// need to populate height, i.e. 'z'
-void	populate_grid(t_grid *grid, int start_x, int start_y)
+void	initialise_grid(t_data *data, char *filename)
 {
-	int	i;
-	int j;
-
-	i = 0;
-	while (i < grid->row)
-	{
-		j = 0;
-		while (j < grid->col)
-		{
-			grid->grid[i][j].x = start_x + (j * grid->box_len);
-			grid->grid[i][j].y = start_y - (i * grid->box_len);
-			// z needs to be updated
-			// need to figure out length between each x & y
-			// figure out how to center
-			grid->grid[i][j].z = 1;
-			j++;
-		}
-		i++;
-	}
-}
-
-void	make_grid_tmp(t_grid *grid)
-{
-	int start_x;
-	int start_y;
-
-	// these 3 variables need to be fed from process inputs
-	grid->box_len = 40;
-	grid->row = 10;
-	grid->col = 20;
-
-	start_x = -(grid->box_len * (grid->col - 1) / 2);
-	start_y = (grid->box_len * (grid->row - 1) / 2);
-	grid->grid = alloc_grid(grid->row, grid->col);
-	populate_grid(grid, start_x, start_y);
-	grid->grid[5][5].z = -100;
-	grid->grid[4][5].z = -100;
-	grid->grid[3][5].z = -100;
-	grid->grid[2][5].z = -100;
-	grid->grid[1][5].z = -100;
-	grid->grid[5][6].z = -75;
-	grid->grid[4][6].z = -75;
-	grid->grid[3][6].z = -75;
-	grid->grid[2][6].z = -75;
-	grid->grid[1][6].z = -75;
-	grid->grid[5][4].z = -75;
-	grid->grid[4][4].z = -75;
-	grid->grid[3][4].z = -75;
-	grid->grid[2][4].z = -75;
-	grid->grid[1][4].z = -75;
-}
-
-void	initialise_grid(t_data *data)
-{
-	make_grid_tmp(&data->grid);
-	data->grid.tmp_grid = alloc_grid(data->grid.row, data->grid.col);
+	// make_grid_tmp(&data->grid);
+	// data->grid.tmp_grid = alloc_grid(data->grid.row, data->grid.col);
 	// need another coordinate to return grid size (can combine along with grid for make_grid afterwards)
 	// for grid also include update of grid width and height
 
@@ -238,16 +184,17 @@ void	initialise_grid(t_data *data)
 	// 		printf("(%4i,%4i) ", data->grid.grid[i][j].x, data->grid.grid[i][j].y);
 	// 	printf("\n");	
 	// }
+	read_file(filename, &data->grid);
 }
 
 void	initialise_transform(t_data *data)
 {
 	// rotation
-	data->tform.rot.x = 0;
-	data->tform.rot.y = 0;
-	data->tform.rot.z = 0;
+	data->tform.rot.x = -5;
+	data->tform.rot.y = -5;
+	data->tform.rot.z = -95;
 	// zoom
-	data->tform.zoom = 1.0;
+	data->tform.zoom = 0.75;
 	//translation
 	data->tform.trans.x = 0;
 	data->tform.trans.y = 0;
@@ -255,14 +202,16 @@ void	initialise_transform(t_data *data)
 	data->tform.perspective = ISOMETRIC;
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	t_data data;
 
+	if (argc != 2)
+		return (1);
 	// initialise window
 	initialise_window(&data);
 	// assign cube
-	initialise_grid(&data);
+	initialise_grid(&data, argv[1]);
 	// apply changes - create temp cube & setup
 	initialise_transform(&data);
 	// output grid
