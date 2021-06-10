@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:50:43 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 20:52:13 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 21:13:58 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	main(int argc, char *argv[])
 	t_data	data;
 
 	if (argc != 2)
+	{
+		ft_putstr_fd("File name missing.\n", 2);
 		return (1);
+	}
 	if (initialise_grid(&data, argv[1]) == -1)
 		return (2);
 	initialise_window(&data, argv[1]);

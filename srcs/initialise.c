@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:22:20 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 21:03:54 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 21:15:26 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,15 @@ int	initialise_grid(t_data *data, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
+	{
+		ft_putstr_fd("File error.\n", 2);
 		return (-1);
+	}
 	if (read_file(fd, &data->grid) == -1)
+	{
+		ft_putstr_fd("Map error.\n", 2);
 		return (-1);
+	}
 	return (0);
 }
 
