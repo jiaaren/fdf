@@ -6,12 +6,11 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:50:43 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 19:05:57 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 19:24:10 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
-#include <stdio.h>
 
 void	exit_hook(t_data *data)
 {
