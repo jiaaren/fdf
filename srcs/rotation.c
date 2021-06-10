@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:51:26 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 12:09:07 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 16:02:41 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_matrix	rotate_x(int degree)
 {
-	const float rad = (degree) * (M_PI / 180.0);
-	t_matrix tmp;
+	const float		rad = (degree) * (M_PI / 180.0);
+	t_matrix		tmp;
 
 	tmp.a = 1;
 	tmp.b = 0;
@@ -31,8 +31,8 @@ t_matrix	rotate_x(int degree)
 
 t_matrix	rotate_y(int degree)
 {
-	const float rad = (degree) * (M_PI / 180.0);
-	t_matrix tmp;
+	const float		rad = (degree) * (M_PI / 180.0);
+	t_matrix		tmp;
 
 	tmp.a = cos(rad);
 	tmp.b = 0;
@@ -48,8 +48,8 @@ t_matrix	rotate_y(int degree)
 
 t_matrix	rotate_z(int degree)
 {
-	const float rad = (degree) * (M_PI / 180.0);
-	t_matrix tmp;
+	const float		rad = (degree) * (M_PI / 180.0);
+	t_matrix		tmp;
 
 	tmp.a = cos(rad);
 	tmp.b = -sin(rad);
@@ -68,7 +68,6 @@ void	apply_rotate(t_coor *coor, char axis, int degree)
 	t_matrix	matrix;
 	t_coor		tmp;
 
-	// can shift all these up next time
 	if (axis == 'x')
 		matrix = rotate_x(degree);
 	else if (axis == 'y')
