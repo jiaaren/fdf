@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 12:42:56 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 22:06:55 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/11 00:49:42 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define PERSPECTIVE 2
 # define ISO_DEGREE 30
 
-# define Z_SCALE 1.0
+# define Z_SCALE 0.1
 # define WIN_FIT 0.80
 
 # define FIELD_OF_VIEW 45
