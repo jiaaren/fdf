@@ -6,16 +6,16 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:22:20 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 17:58:06 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 18:55:10 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
-void	initialise_window(t_data *data)
+void	initialise_window(t_data *data, char *title)
 {
 	data->win.mlx = mlx_init();
-	data->win.window = mlx_new_window(data->win.mlx, RESO_X, RESO_Y, "Hello");
+	data->win.window = mlx_new_window(data->win.mlx, RESO_X, RESO_Y, title);
 	data->img.img = mlx_new_image(data->win.mlx, RESO_X, RESO_Y);
 	data->img.addr = mlx_get_data_addr(data->img.img,
 			&data->img.bits_per_pixel, &data->img.line_len, &data->img.endian);

@@ -6,13 +6,13 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:28:12 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 17:41:47 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 19:05:11 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
-void	clean_image(int rows, int cols, t_img *img)
+void	clean_image(t_img *img)
 {
 	int	i;
 	int	j;
@@ -80,14 +80,14 @@ void	print_grid_line(t_grid *grid, t_img *img, int color)
 
 void	output_blank(t_data *data)
 {
-	clean_image(RESO_Y, RESO_X, &data->img);
+	clean_image(&data->img);
 	mlx_put_image_to_window(data->win.mlx,
 		data->win.window, data->img.img, 0, 0);
 }
 
 void	output_grid(t_data *data)
 {
-	clean_image(RESO_Y, RESO_X, &data->img);
+	clean_image(&data->img);
 	copy_grid(&data->grid);
 	apply_transformation(&data->grid, &data->tform);
 	print_grid_line(&data->grid, &data->img, HEX_COLOR);

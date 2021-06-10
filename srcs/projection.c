@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:53:11 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 17:52:03 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 19:06:17 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	apply_iso(t_coor *coor)
 	coor->z = coor->z;
 }
 
-int	switch_projection(int *projection)
+void	switch_projection(int *projection)
 {
 	if (*projection == ISOMETRIC)
 		*projection = PERSPECTIVE;

@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 12:42:56 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 18:19:07 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 19:06:27 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include <mlx.h>
-# include <stdio.h>
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -108,7 +107,7 @@ typedef struct s_data
 }				t_data;
 
 // initialisation
-void		initialise_window(t_data *data);
+void		initialise_window(t_data *data, char *title);
 void		initialise_grid(t_data *data, char *filename);
 void		initialise_transform(t_data *data);
 
@@ -147,10 +146,10 @@ void		apply_transformation(t_grid *grid, t_tform *tform);
 // projection
 void		apply_perspective(t_coor *coor, double Z0);
 void		apply_iso(t_coor *coor);
-int			switch_projection(int *projection);
+void		switch_projection(int *projection);
 
 // image processing
-void		clean_image(int rows, int cols, t_img *img);
+void		clean_image(t_img *img);
 void		print_grid_points(t_grid *grid, t_img *img, int color);
 void		print_grid_line(t_grid *grid, t_img *img, int color);
 void		output_blank(t_data *data);
