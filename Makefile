@@ -6,7 +6,7 @@
 #    By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/03 16:52:02 by jkhong            #+#    #+#              #
-#    Updated: 2021/06/10 19:28:27 by jkhong           ###   ########.fr        #
+#    Updated: 2021/06/10 20:12:48 by jkhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ LIBPATH =	-Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz -Llibft -lft
 			$(CC) $(CFLAGS) -c $(LIBPATH) $(HPATH)  -O3 $< -o ${<:.c=.o}
 
 all:		$(NAME)
+
+bonus:		$(NAME)
 
 $(NAME): 	$(OBJS)
 			$(CC) $(CFLAGS) $(HPATH) -o $(NAME) $(OBJS) $(LIBPATH) 

@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:51:21 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 17:53:19 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 21:01:50 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,25 @@ void	apply_transformation(t_grid *grid, t_tform *tform)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < grid->row)
+	i = -1;
+	while (++i < grid->row)
 	{
-		j = 0;
-		while (j < grid->col)
+		j = -1;
+		while (++j < grid->col)
 		{
 			apply_rotate(&grid->tmp_grid[i][j], 'x', tform->rot.x);
 			apply_rotate(&grid->tmp_grid[i][j], 'y', tform->rot.y);
 			apply_rotate(&grid->tmp_grid[i][j], 'z', tform->rot.z);
-			apply_zoom(&grid->tmp_grid[i][j], tform->zoom);
+			if (tform->projection == ISOMETRIC)
+				apply_zoom(&grid->tmp_grid[i][j], tform->zoom);
 			if (tform->projection == ISOMETRIC)
 				apply_iso(&grid->tmp_grid[i][j]);
 			else if (tform->projection == PERSPECTIVE)
 				apply_perspective(&grid->tmp_grid[i][j], tform->z0_const);
+			if (tform->projection == PERSPECTIVE)
+				apply_zoom(&grid->tmp_grid[i][j], tform->zoom);
 			apply_translate(&grid->tmp_grid[i][j], tform->trans);
 			apply_center(&grid->tmp_grid[i][j]);
-			j++;
 		}
-		i++;
 	}
 }

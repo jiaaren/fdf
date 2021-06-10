@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 12:14:51 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 17:38:35 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 21:03:42 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,30 @@ void 	copy_grid(t_grid *grid)
 		}
 		i++;
 	}
+}
+
+int	check_array(char ***split, int row, int *col)
+{
+	int	arr_len;
+	int	i;
+	int	count_tmp;
+
+	*col = 0;
+	arr_len = 0;
+	while (split && split[0][arr_len])
+		arr_len++;
+	i = 0;
+	while (i < row)
+	{
+		count_tmp = 0;
+		while (split[i][count_tmp])
+			count_tmp++;
+		if (count_tmp != arr_len)
+			return (-1);
+		i++;
+	}
+	*col = arr_len;
+	if (row == 0 || *col == 0)
+		return (-1);
+	return (0);
 }

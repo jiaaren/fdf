@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 16:51:55 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 16:58:16 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 20:53:19 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_coor	**make_grid(char ***split, t_grid *grid)
 		{
 			tmp[i][j].x = start_x + (j * grid->box_len);
 			tmp[i][j].y = start_y - (i * grid->box_len);
-			tmp[i][j].z = -(ft_atoi(split[i][j])) * (grid->box_len) * Z_ADJ;
+			tmp[i][j].z = -(ft_atoi(split[i][j])) * (grid->box_len) * Z_SCALE;
 			j++;
 		}
 		i++;
@@ -84,30 +84,30 @@ void	update_tgrid(t_grid *grid, int row, int col)
 	grid->tmp_grid = alloc_grid(row, col);
 }
 
-int	read_file(const char *filename, t_grid *grid)
+int	read_file(int fd, t_grid *grid)
 {
-	int		fd;
 	t_list	*lst;
 	int		row;
 	int		col;
 	char	***split;
+	int		err;
 
+	err = 0;
 	lst = NULL;
 	row = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (-1);
 	lst = make_list(fd, &row);
 	split = NULL;
 	split = make_char_arr(lst, row);
-	col = 0;
-	while (split && split[0][col])
-		col++;
-	grid->grid = NULL;
-	update_tgrid(grid, row, col);
-	grid->grid = make_grid(split, grid);
+	if (check_array(split, row, &col) == -1)
+		err = -1;
+	else
+	{
+		grid->grid = NULL;
+		update_tgrid(grid, row, col);
+		grid->grid = make_grid(split, grid);
+	}
 	ft_lstclear(&lst, free);
 	split = free_char_arr(split, row);
 	close(fd);
-	return (0);
+	return (err);
 }

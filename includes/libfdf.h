@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 12:42:56 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 19:06:27 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 21:02:12 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <stdio.h>
 
-# define ISOMETRIC 1
-# define PERSPECTIVE 2
-# define FIELD_OF_VIEW 45
 # define RESO_X 800
 # define RESO_Y 800
 # define HEX_COLOR 0x0000FF00
-# define Z_ADJ 1.0
+
+# define ISOMETRIC 1
+# define PERSPECTIVE 2
+
+# define Z_SCALE 0.1
 # define WIN_FIT 0.80
+
+# define FIELD_OF_VIEW 45
+# define DEFAULT_ZOOM 0.5
+# define DEFAULT_X_ROT -5
+# define DEFAULT_Y_ROT -5
+# define DEFAULT_Z_ROT -95
 
 typedef struct s_coor
 {
@@ -108,7 +116,7 @@ typedef struct s_data
 
 // initialisation
 void		initialise_window(t_data *data, char *title);
-void		initialise_grid(t_data *data, char *filename);
+int			initialise_grid(t_data *data, char *filename);
 void		initialise_transform(t_data *data);
 
 // grid processing
@@ -119,8 +127,9 @@ t_coor		**alloc_grid(int row, int col);
 t_coor		**make_grid(char ***split, t_grid *grid);
 t_coor		**free_grid(t_coor **grid, int row);
 void		update_tgrid(t_grid *grid, int row, int col);
-int			read_file(const char *filename, t_grid *grid);
+int			read_file(int fd, t_grid *grid);
 void		copy_grid(t_grid *grid);
+int			check_array(char ***split, int row, int *col);
 
 // utils
 void		my_mlx_pixel_put(t_img *img, int x, int y, int color);
@@ -128,8 +137,8 @@ int			abs_int(int n);
 float		abs_float(float n);
 
 // ft_make_line
-void		make_line_r(t_coor a, t_coor b, int color, t_img *img);
-void		make_line_l(t_coor a, t_coor b, int color, t_img *img);
+void		make_line_x(t_coor a, t_coor b, int color, t_img *img);
+void		make_line_y(t_coor a, t_coor b, int color, t_img *img);
 void		make_line(t_coor a, t_coor b, int color, t_img *img);
 
 // rotation

@@ -6,13 +6,13 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 12:41:59 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 18:17:49 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 20:17:06 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
-void	make_line_r(t_coor a, t_coor b, int color, t_img *img)
+void	make_line_x(t_coor a, t_coor b, int color, t_img *img)
 {
 	int			x;
 	int			y;
@@ -40,7 +40,7 @@ void	make_line_r(t_coor a, t_coor b, int color, t_img *img)
 	}
 }
 
-void	make_line_l(t_coor a, t_coor b, int color, t_img *img)
+void	make_line_y(t_coor a, t_coor b, int color, t_img *img)
 {
 	int			x;
 	int			y;
@@ -88,7 +88,7 @@ void	make_line(t_coor a, t_coor b, int color, t_img *img)
 		b.y = temp;
 	}
 	if (grad >= -1 && grad <= 1)
-		make_line_r(a, b, color, img);
+		make_line_x(a, b, color, img);
 	else
-		make_line_l(a, b, color, img);
+		make_line_y(a, b, color, img);
 }

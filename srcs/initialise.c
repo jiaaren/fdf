@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:22:20 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 18:55:10 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 21:03:54 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,24 @@ void	initialise_window(t_data *data, char *title)
 	data->img.reso_h = RESO_Y;
 }
 
-void	initialise_grid(t_data *data, char *filename)
+int	initialise_grid(t_data *data, char *filename)
 {
-	read_file(filename, &data->grid);
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	if (read_file(fd, &data->grid) == -1)
+		return (-1);
+	return (0);
 }
 
 void	initialise_transform(t_data *data)
 {
-	data->tform.rot.x = -5;
-	data->tform.rot.y = -5;
-	data->tform.rot.z = -95;
-	data->tform.zoom = 0.75;
+	data->tform.rot.x = DEFAULT_X_ROT;
+	data->tform.rot.y = DEFAULT_Y_ROT;
+	data->tform.rot.z = DEFAULT_Z_ROT;
+	data->tform.zoom = DEFAULT_ZOOM;
 	data->tform.trans.x = 0;
 	data->tform.trans.y = 0;
 	data->tform.projection = ISOMETRIC;
