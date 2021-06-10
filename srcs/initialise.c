@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:22:20 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 21:15:26 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 22:07:07 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,6 @@ void	initialise_transform(t_data *data)
 	data->tform.projection = ISOMETRIC;
 	data->tform.z0_const
 		= (RESO_X / 2.0) / tan((FIELD_OF_VIEW / 2.0) * (M_PI / 180.0));
+	data->tform.iso_radian_const
+		= (ISO_DEGREE / 180.0) * M_PI;
 }

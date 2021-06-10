@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 12:42:56 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 21:02:12 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 22:06:55 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@
 
 # define ISOMETRIC 1
 # define PERSPECTIVE 2
+# define ISO_DEGREE 30
 
-# define Z_SCALE 0.1
+# define Z_SCALE 1.0
 # define WIN_FIT 0.80
 
 # define FIELD_OF_VIEW 45
@@ -104,6 +105,7 @@ typedef struct s_tform
 	float		zoom;
 	int			projection;
 	double		z0_const;
+	float		iso_radian_const;
 }				t_tform;
 
 typedef struct s_data
@@ -154,7 +156,7 @@ void		apply_transformation(t_grid *grid, t_tform *tform);
 
 // projection
 void		apply_perspective(t_coor *coor, double Z0);
-void		apply_iso(t_coor *coor);
+void		apply_iso(t_coor *coor, float iso_rad_const);
 void		switch_projection(int *projection);
 
 // image processing

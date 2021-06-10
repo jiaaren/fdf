@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:51:21 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 21:01:50 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/06/10 22:00:42 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	apply_transformation(t_grid *grid, t_tform *tform)
 			if (tform->projection == ISOMETRIC)
 				apply_zoom(&grid->tmp_grid[i][j], tform->zoom);
 			if (tform->projection == ISOMETRIC)
-				apply_iso(&grid->tmp_grid[i][j]);
+				apply_iso(&grid->tmp_grid[i][j], tform->iso_radian_const);
 			else if (tform->projection == PERSPECTIVE)
 				apply_perspective(&grid->tmp_grid[i][j], tform->z0_const);
 			if (tform->projection == PERSPECTIVE)
