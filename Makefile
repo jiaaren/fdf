@@ -6,7 +6,7 @@
 #    By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/03 16:52:02 by jkhong            #+#    #+#              #
-#    Updated: 2021/06/10 22:11:49 by jkhong           ###   ########.fr        #
+#    Updated: 2021/06/11 01:25:42 by jkhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,13 @@ all:		$(NAME)
 
 bonus:		$(NAME)
 
-$(NAME): 	$(OBJS)
+ftmake:	
+			cd libft && make all
+
+mlxmake:	
+			cd mlx_linux && make all
+
+$(NAME): 	ftmake mlxmake $(OBJS)
 			$(CC) $(CFLAGS) $(HPATH) -o $(NAME) $(OBJS) $(LIBPATH) 
 clean:
 			rm -f $(OBJS)
