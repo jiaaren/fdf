@@ -6,7 +6,7 @@
 #    By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/03 16:52:02 by jkhong            #+#    #+#              #
-#    Updated: 2021/06/11 01:25:42 by jkhong           ###   ########.fr        #
+#    Updated: 2021/07/21 16:12:29 by jkhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,30 +17,37 @@ OBJS	=	${SRCS:.c=.o}
 NAME	=	fdf
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
-HPATH	=	-Imlx_linux -Iincludes -Ilibft/includes -I/usr/include
-LIBPATH =	-Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz -Llibft -lft 
+HPATH	=	-I ./mlx_linux -I ./includes -I ./libft/includes -I /usr/include
+LIBPATH =	-L ./mlx_linux -l mlx  -L ./libft -l ft -L /usr/lib -lXext -lX11 -lm -lz
 
 %.o: %.c
-			$(CC) $(CFLAGS) -c $(LIBPATH) $(HPATH)  -O3 $< -o ${<:.c=.o}
+			$(CC) $(CFLAGS) -c $(HPATH) $< -o ${<:.c=.o}
 
 all:		$(NAME)
 
 bonus:		$(NAME)
 
-ftmake:	
-			cd libft && make all
+libft:
+			make -C ./libft
 
-mlxmake:	
-			cd mlx_linux && make all
+clean_libft:
+			make clean -C ./libft
 
-$(NAME): 	ftmake mlxmake $(OBJS)
-			$(CC) $(CFLAGS) $(HPATH) -o $(NAME) $(OBJS) $(LIBPATH) 
-clean:
+mlx:
+			make -C ./mlx_linux
+
+clean_mlx:
+			make clean -C ./mlx_linux
+
+$(NAME): 	libft mlx $(OBJS)
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBPATH) 
+
+clean:		clean_libft clean_mlx
 			rm -f $(OBJS)
 
 fclean:		clean
-			rm -f $(NAME)
+			rm -f $(NAME) ./libft/*.a ./mlx_linux/*.a
 
 re:			fclean all
 
-.PHONY:		all clean fclean re bonus
+.PHONY:		all clean fclean re bonus libft clean_libft mlx clean_mlx
