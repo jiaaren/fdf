@@ -6,12 +6,16 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:22:20 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 22:07:07 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/07/22 13:46:46 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
+/*
+	Minilibx default requirement to initialise mlx, window and img
+	Also preset resolution of struct variables according to const in header file
+*/
 void	initialise_window(t_data *data, char *title)
 {
 	data->win.mlx = mlx_init();
@@ -25,6 +29,10 @@ void	initialise_window(t_data *data, char *title)
 	data->img.reso_h = RESO_Y;
 }
 
+/*
+	Calls grid functions in make_grid & make_grid_utils.c
+	Return value relates to validation of file passed in
+*/
 int	initialise_grid(t_data *data, char *filename)
 {
 	int	fd;
@@ -43,6 +51,10 @@ int	initialise_grid(t_data *data, char *filename)
 	return (0);
 }
 
+/*
+	Struct to keep track of transform variables required as image changes dynamically
+	Constants are defined in libfdf.h
+*/
 void	initialise_transform(t_data *data)
 {
 	data->tform.rot.x = DEFAULT_X_ROT;
