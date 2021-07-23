@@ -6,7 +6,7 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 16:51:55 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 20:53:19 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/07/23 13:48:10 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ t_coor	**alloc_grid(int row, int col)
 	return (tmp);
 }
 
+/*
+	(i) allocate grid using row and col numbers
+	(ii) calculate starting x and y coordinates, need to visualise a 4 quadrant axis
+	(iii) assign coordinates for all points (i.e. row * col) according to:
+		- starting x and y coordinates
+		- box_length calculated via make_tgrid()
+*/
 t_coor	**make_grid(char ***split, t_grid *grid)
 {
 	int		i;
@@ -68,6 +75,12 @@ t_coor	**free_grid(t_coor **grid, int row)
 	return (NULL);
 }
 
+/*
+	Calculates optimal box length based upon window resolution
+	- compares max box_width and max_box_length and chooses lower value
+
+	Updates and allocates value for tmp_grid variable
+*/
 void	update_tgrid(t_grid *grid, int row, int col)
 {
 	int	max_box_width;
@@ -84,6 +97,35 @@ void	update_tgrid(t_grid *grid, int row, int col)
 	grid->tmp_grid = alloc_grid(row, col);
 }
 
+/*
+	Objective: update the grid->grid & grid->tmp_grid variables in data struct
+	Return values: returns (-1) if error noted, 0 if success
+	Errors: inconsistent columns in each row, Invalid file (handled in initialise.c) 
+
+	Steps
+	I. Parse file 
+	(i) make_list (MALLOC): generate list of rows using get_next_line and returns lst
+	(ii) make_char_arr (MALLOC): returns double dested array for char *, i.e. char***, using ft_split
+	e.g. make_list returns {"0 0 0 0"}, while make_char_arr returns {"0", "0", "0", "0"}
+
+	II. Validate data
+	(i) check_arr: returns true (0) or false (-1) if number of rows are inconsistent
+					- also updates 'col' variable if success
+	
+	III. Update grid if no errors noted
+	(i) update_tgrid:
+		- calculates box_len and update data struct
+		- (MALLOC) allocates memory for tmp_grid
+	(ii) make_grid: reads double nested char * array, uses box_len calculated
+		- updates grid pointer in data_struct
+	
+	IV. Free
+	(i) frees list created (*lst)
+	(ii) frees double nested char * array (***split)
+
+	V. Return
+	(-1) if error noted, 0 if success
+*/
 int	read_file(int fd, t_grid *grid)
 {
 	t_list	*lst;

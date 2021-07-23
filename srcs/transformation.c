@@ -6,12 +6,13 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:51:21 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 22:00:42 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/07/23 14:19:12 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
+// Magnifies coordinates by appling Zoom scale
 void	apply_zoom(t_coor *coor, float zoom)
 {
 	if (zoom < 0)
@@ -21,18 +22,34 @@ void	apply_zoom(t_coor *coor, float zoom)
 	coor->z *= zoom;
 }
 
+// Moves coordinates by according to x, y distance displaced
 void	apply_translate(t_coor *coor, t_trans trans)
 {
 	coor->x += trans.x;
 	coor->y += trans.y;
 }
 
+/*
+	Converts coordinates from
+	- 4 segment coordinate map (0, 0 in center)
+	- to display coordinates (0, 0 in top left)
+*/
 void	apply_center(t_coor *coor)
 {
 	coor->x = coor->x + RESO_X / 2;
 	coor->y = (RESO_Y / 2) - coor->y;
 }
 
+/*
+	Loop through every single point in replicated tmp_grid, and:
+	- apply_rotate: 3 times, for x, y and z
+	- apply_projection: isometric/perspective
+	- apply_zoom
+	- apply_translate
+	- apply_center
+
+	Ordering is important
+*/
 void	apply_transformation(t_grid *grid, t_tform *tform)
 {
 	int	i;

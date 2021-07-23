@@ -6,13 +6,17 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 12:14:51 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 21:03:42 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/07/23 13:52:17 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 #include "libft.h"
 
+/*
+	- Reads *lst of rows for char * separated by ' ' 
+	- creates double nested array of char *, and returns data
+*/
 char 	***make_char_arr(t_list *lst, int row)
 {
 	char	***split;
@@ -50,6 +54,7 @@ char	***free_char_arr(char ***split, int row)
 	return (NULL);
 }
 
+// Calls GNL and stores rows in list, returns list
 t_list	*make_list(int fd, int *row)
 {
 	char	*tmp;
@@ -62,10 +67,12 @@ t_list	*make_list(int fd, int *row)
 		ft_lstadd_front(&lst, ft_lstnew(tmp));
 		(*row)++;
 	}
+	// TO FREE - final char *tmp which has NULL in first index, but still occupies memory
 	free(tmp);
 	return (lst);
 }
 
+// Replicates grid to tmp_grid. Purpose: maintain integrity of grid->grid
 void 	copy_grid(t_grid *grid)
 {
 	int	i;
@@ -86,19 +93,28 @@ void 	copy_grid(t_grid *grid)
 	}
 }
 
+/*
+	Return values:
+	1. False, i.e. -1 if columns in each row is inconsistent
+	2. If either row or col is 0
+	3. Initialises calculates columns and updates int ptr 'col'
+*/
 int	check_array(char ***split, int row, int *col)
 {
+	// arr_len to initially store column length
 	int	arr_len;
 	int	i;
 	int	count_tmp;
 
 	*col = 0;
 	arr_len = 0;
+	// calculates len columns of first row
 	while (split && split[0][arr_len])
 		arr_len++;
 	i = 0;
 	while (i < row)
 	{
+		// resets to 0 and counts columns for each row
 		count_tmp = 0;
 		while (split[i][count_tmp])
 			count_tmp++;
@@ -106,6 +122,7 @@ int	check_array(char ***split, int row, int *col)
 			return (-1);
 		i++;
 	}
+	// update col ptr with col length if no error
 	*col = arr_len;
 	if (row == 0 || *col == 0)
 		return (-1);

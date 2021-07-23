@@ -6,12 +6,21 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 10:51:26 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 16:02:41 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/07/23 14:14:56 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
+/*
+	t_matrix struct stores an empty rotation matrix, which is based upon
+	- x axis
+	- y axis
+	- z axis
+
+	All 3 functions, rotate_x, rotate_y and rotate_z converts degree passed in to radians
+	- returns t_matrix to be used in apply_rotate
+*/
 t_matrix	rotate_x(int degree)
 {
 	const float		rad = (degree) * (M_PI / 180.0);
@@ -63,20 +72,28 @@ t_matrix	rotate_z(int degree)
 	return (tmp);
 }
 
+/*
+	Function will be executed 3 times, for x, y and z from transformation.c
+	- updates coordinate x, y and z using matrix multiplication
+	- based upon updated rotational matrices for x, y and z from 3 functions above
+*/
 void	apply_rotate(t_coor *coor, char axis, int degree)
 {
 	t_matrix	matrix;
 	t_coor		tmp;
 
+	// Choose rotational formulas to be applied
 	if (axis == 'x')
 		matrix = rotate_x(degree);
 	else if (axis == 'y')
 		matrix = rotate_y(degree);
 	else if (axis == 'z')
 		matrix = rotate_z(degree);
+	// Store tmp to prevent update/change of data
 	tmp.x = coor->x;
 	tmp.y = coor->y;
 	tmp.z = coor->z;
+	// Matric multiplication to consider existing coordinates
 	coor->x = (tmp.x * matrix.a) + (tmp.y * matrix.b) + (tmp.z * matrix.c);
 	coor->y = (tmp.x * matrix.d) + (tmp.y * matrix.e) + (tmp.z * matrix.f);
 	coor->z = (tmp.x * matrix.g) + (tmp.y * matrix.h) + (tmp.z * matrix.i);

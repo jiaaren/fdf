@@ -6,12 +6,13 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:28:12 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 19:05:11 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/07/23 14:22:39 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
+// Wipes image pointer and clears all points to black, i.e. rgb 000000
 void	clean_image(t_img *img)
 {
 	int	i;
@@ -30,6 +31,7 @@ void	clean_image(t_img *img)
 	}
 }
 
+// Unused: used to print grid_points for testing
 void	print_grid_points(t_grid *grid, t_img *img, int color)
 {
 	int	i;
@@ -55,6 +57,7 @@ void	print_grid_points(t_grid *grid, t_img *img, int color)
 	}
 }
 
+// Using final points established, connect points with lines using line drawing algo
 void	print_grid_line(t_grid *grid, t_img *img, int color)
 {
 	int		i;
@@ -78,6 +81,7 @@ void	print_grid_line(t_grid *grid, t_img *img, int color)
 	}
 }
 
+// Output pure blank canvas (for instances where zoom is <= 0)
 void	output_blank(t_data *data)
 {
 	clean_image(&data->img);
@@ -85,6 +89,15 @@ void	output_blank(t_data *data)
 		data->win.window, data->img.img, 0, 0);
 }
 
+/*
+	Ordering to constantly display grid
+
+	Clean_image pointer
+		> Copy grid to tmp_grid (avoid losing reference)
+			> Apply transformation to tmp_grid
+				> Print_grid_lines based on transformed tmp_grid coordinates
+					> Display image: mlx_put_image_to_window
+*/
 void	output_grid(t_data *data)
 {
 	clean_image(&data->img);

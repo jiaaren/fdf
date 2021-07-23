@@ -6,12 +6,13 @@
 /*   By: jkhong <jkhong@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 12:41:59 by jkhong            #+#    #+#             */
-/*   Updated: 2021/06/10 20:17:06 by jkhong           ###   ########.fr       */
+/*   Updated: 2021/07/23 14:02:03 by jkhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfdf.h"
 
+// Handles x plane
 void	make_line_x(t_coor a, t_coor b, int color, t_img *img)
 {
 	int			x;
@@ -40,6 +41,7 @@ void	make_line_x(t_coor a, t_coor b, int color, t_img *img)
 	}
 }
 
+// Handles y plane
 void	make_line_y(t_coor a, t_coor b, int color, t_img *img)
 {
 	int			x;
@@ -68,15 +70,18 @@ void	make_line_y(t_coor a, t_coor b, int color, t_img *img)
 	}
 }
 
+// Bresenham's algorithm
 void	make_line(t_coor a, t_coor b, int color, t_img *img)
 {
 	int		temp;
 	float	grad;
 
+	// condition to avoid division by zero, since gradient = y / x
 	if (b.x - a.x == 0)
 		grad = (b.y - a.y);
 	else
 		grad = (b.y - a.y) / (float)(b.x - a.x);
+	// condition to swap coordinates
 	if ((b.x < a.x && abs_float(grad) <= 1.0)
 		|| (b.y < a.y && abs_float(grad) > 1.0))
 	{
@@ -87,6 +92,7 @@ void	make_line(t_coor a, t_coor b, int color, t_img *img)
 		a.y = b.y;
 		b.y = temp;
 	}
+	// condition to choose algorithm for X or Y plane
 	if (grad >= -1 && grad <= 1)
 		make_line_x(a, b, color, img);
 	else
