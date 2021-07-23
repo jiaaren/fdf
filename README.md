@@ -1,5 +1,7 @@
 ## **FDF**
 
+<img src="./references/42.gif" width="450"><img src="./references/t2.gif" width="450" >
+
 - [**FDF**](#fdf)
   - [**Steps to execute program**](#steps-to-execute-program)
   - [**Program overview/flowchart**](#program-overviewflowchart)
